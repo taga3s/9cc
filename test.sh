@@ -1,0 +1,23 @@
+#!/bin/bash
+assert() {
+  expected="$1"
+  input="$2"
+  docker_opts="--rm -v $HOME/Desktop/my-work/learning/build-your-ownx/9cc:/9cc -w /9cc compilerbook"
+
+  docker run $docker_opts ./9cc "$input" > tmp.s
+  docker run $docker_opts cc -o tmp tmp.s
+  docker run $docker_opts ./tmp
+  actual="$?"
+
+  if [ "$actual" = "$expected" ]; then
+    echo "$input => $actual"
+  else
+    echo "$input => $expected expected, but got $actual"
+    exit 1
+  fi
+}
+
+assert 0 0
+assert 42 42
+
+echo OK
