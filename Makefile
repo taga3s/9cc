@@ -1,8 +1,7 @@
-CFLAGS=-std=c11 -g -static
+build:
+				docker run --rm -v ./:/9cc -w /9cc compilerbook cc -std=c11 -g -static -o 9cc ./9cc.c
 
-9cc: 9cc.c
-
-test: 9cc
+test: build
 				./test.sh
 
 clean:
